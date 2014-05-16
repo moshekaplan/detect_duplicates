@@ -111,13 +111,13 @@ def find_duplicates(all_files):
 
 
 def find_and_print_dupes(paths):
-    start_time = time.clock()
+    start_time = time.time()
 
     files = enumerate_files(paths)
-    enumerate_time = time.clock() - start_time
+    enumerate_time = time.time() - start_time
 
     dupes = find_duplicates(files)
-    dupe_time = time.clock() - enumerate_time - start_time
+    dupe_time = time.time() - enumerate_time - start_time
 
     print "enumerate_time", enumerate_time
     print "dupe_time", dupe_time
