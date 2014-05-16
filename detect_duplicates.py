@@ -40,23 +40,23 @@ def get_crc32(fname, blocksize=2**16):
     """Computes a CRC-32 checksum for a file"""
 
     with open(fname, 'rb') as fh:
-        hash = zlib.crc32('')
+        fhash = zlib.crc32('')
 
         data = fh.read(blocksize)
         while data:
-            hash = zlib.crc32(data, hash)
+            fhash = zlib.crc32(data, hash)
             data = fh.read(blocksize)
-        return hash
+        return fhash
 
 
 class DupeEntry():
-    def __init__(self, hash, size, files):
-        self.hash = hash
+    def __init__(self, fhash, size, files):
+        self.fhash = fhash
         self.size = size
         self.files = files
 
     def get_hash(self):
-        return self.hash
+        return self.fhash
 
     def get_size(self):
         return self.size
@@ -98,14 +98,14 @@ def find_duplicates(all_files):
         # Build a list of files with the same hash
         dupes = collections.defaultdict(list)
         for fname in files:
-            hash = get_crc32(fname)
-            dupes[hash].append(fname)
+            fhash = get_crc32(fname)
+            dupes[fhash].append(fname)
 
-        for hash, filelist in dupes.iteritems():
+        for fhash, filelist in dupes.iteritems():
             # There can't be any duplicates if only one file has that hash
             if len(filelist) == 1:
                 continue
-            dupe = DupeEntry(hash, fsize, filelist)
+            dupe = DupeEntry(fhash, fsize, filelist)
             all_dupes.append(dupe)
     return all_dupes
 
