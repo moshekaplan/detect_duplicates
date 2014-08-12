@@ -74,7 +74,7 @@ def enumerate_files(start_dirs):
     # The size will be the key, each entry will be a file
     all_files = collections.defaultdict(list)
     for start_dir in start_dirs:
-        for dirpath, _, filenames in os.walk(start_dir):
+        for dirpath, _, filenames in os.walk(os.path.abspath(start_dir)):
             for fname in filenames:
                 fpath = os_path_join(dirpath, fname)
                 size = os_path_getsize(fpath)
