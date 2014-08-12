@@ -44,7 +44,7 @@ def get_crc32(fname, blocksize=2**16):
 
         data = fh.read(blocksize)
         while data:
-            fhash = zlib.crc32(data, hash)
+            fhash = zlib.crc32(data, fhash)
             data = fh.read(blocksize)
         return fhash
 
